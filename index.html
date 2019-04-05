@@ -6,64 +6,122 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Trivia Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--link to jQuery-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
     <!--link to bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!--link to jQuery-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+    
+    
+
     <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
-    <!--<script src="main.js"></script>-->
 </head>
 
 <body>
     <div class="container">
-            <div class="alert alert-primary text-center" role="alert">
-                    <h1>Random Trivia!</h1>
-            </div>   
-        <div class="card" style="width: 18rem;">
-            <img src="./assets/img/Belch.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p id="question"class="card-text">?</p>
-                <h5 class="card-title">Time left: <strong id="timer"></strong></h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                            value="option1" checked>
-                        <label id="a1" class="form-check-label" for="exampleRadios1">
-                            Default radio
-                        </label>
+        <div class="alert alert-primary text-center" role="alert">
+            <h1>Random Trivia!</h1>
+        </div>
+        <div class="row">
+            <div class="col col-md-3"></div>
+            <div class="col col-md-5">
+                <div id="instructionsCard" class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Wellcome to the Trivia Game</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Follow the instructions</h6>
+                        <p class="card-text">Click Start to start playing, you will receive 5 questions which will have
+                            to be answer in a time of 10 seconds for each one, Good Luck</p>
+                        <button id="startBtn" type="button" class="btn btn-success">Start</button>
                     </div>
+                </div>
+                <div id="questionsCard" class="card" style="width: 100%; display: none;">
+                    <img src="" class="card-img-top" id="images">
+                    <div class="card-body">
+                        <p id="question" class="card-text"></p>
+                        <h5 class="card-title">Time left: <strong id="timer"></strong></h5>
+                    </div>
+                    <ul class="list-group list-group-flush" id="xrnd">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="resp" id="r0" value="">
+                                <label id="a0" class="form-check-label" for="exampleRadios1">
 
-                </li>
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                            value="option2">
-                        <label id="a2" class="form-check-label" for="exampleRadios2">
-                            Second default radio
-                        </label>
+                                </label>
+                            </div>
+
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="resp" id="r1" value="">
+                                <label id="a1" class="form-check-label" for="exampleRadios2">
+
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="resp" id="r2" value="">
+                                <label id="a2" class="form-check-label" for="exampleRadios2">
+
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <button id="nextBtn" type="button" class="btn btn-success">Start</button>
                     </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                            value="option2">
-                        <label id="a3"class="form-check-label" for="exampleRadios2">
-                            Second default radio
-                        </label>
+                </div>
+                <div id="resultsCard" class="card" style="width: 100%; display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Results</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Correct Answers:<strong id="ca"></strong></h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Wrong Answers:<strong id="wa"></strong></h6>
+                        <button id="restartBtn" type="button" class="btn btn-success">Restart</button>
                     </div>
-                </li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="btn btn-primary">Submit</a>
+                </div>
+            </div>
+            <div class="col col-md-3"></div>
+        </div>
+        <!--modal-->
+        <div class="modal" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Times up</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Clck next to continue</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary nxt" data-dismiss="modal" >Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--modal-->
+        <div class="modal" id="ansModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ansMH"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Clck next to continue</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary nxt" data-dismiss="modal" >Next</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 </body>
+<script src="./assets/js/globals.js"></script>
+<script src="./assets/js/script.js"></script>
 
 </html>
